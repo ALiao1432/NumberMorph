@@ -15,14 +15,14 @@ class XmlLabelParser {
     private static final String TAG = "XmlLabelParser";
 
     private XmlResourceParser xmlResourceParser;
-    private String data;
-
 
     XmlLabelParser(Context context, int id) {
         xmlResourceParser = context.getResources().getXml(id);
     }
 
     public String getLabelData(@Nullable String labelName, @Nullable String attrName) {
+        String data = null;
+
         try {
             int event = xmlResourceParser.getEventType();
 
@@ -50,10 +50,10 @@ class XmlLabelParser {
                         }
                         break;
                     case XmlPullParser.TEXT:
-                        Log.d(TAG, "Text : " + xmlResourceParser.getText());
+//                        Log.d(TAG, "Text : " + xmlResourceParser.getText());
                         break;
                     case XmlPullParser.END_TAG:
-                        Log.d(TAG, "End parsing");
+//                        Log.d(TAG, "End parsing");
                         break;
                     default:
                         break;
