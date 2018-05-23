@@ -11,7 +11,7 @@ class DataPath extends Path {
 
     private static final String TAG = "DataPath";
 
-    private final String[] commandString = {"M", "C", "L", "H", "V"};
+    private final String[] commandString = {"M", "C", "L", "H", "V", "Z"};
     private float[] scaleFactors;
     private String pathData;
     private PointF lastPointF = new PointF();
@@ -40,6 +40,9 @@ class DataPath extends Path {
                     break;
                 case 'V':
                     addVtoCommand(fullCommand);
+                    break;
+                case 'Z':
+                    addCloseCommand();
                     break;
             }
         }
@@ -124,6 +127,10 @@ class DataPath extends Path {
         lastPointF = vPointFS[size - 1];
     }
 
+    private void addCloseCommand() {
+        this.close();
+    }
+
     private PointF[] getPointFromCommand(String command) {
         command = command.substring(1, command.length());
 
@@ -149,8 +156,8 @@ class DataPath extends Path {
 
         for (int i = 0; i < pointStrings.length; i++) {
             pointFS[i] = new PointF(
-                Float.valueOf(pointStrings[i]) * scaleFactors[0],
-                lastPointF.y
+                    Float.valueOf(pointStrings[i]) * scaleFactors[0],
+                    lastPointF.y
             );
         }
 
