@@ -14,7 +14,6 @@ public class NumberMorphView extends View {
     private static final String TAG = "XmlLabelParser";
 
     private DataPath path;
-    private String pathData;
     private Paint paint = new Paint();
     private final int wSize = 500;
     private final int hSize = 500;
@@ -51,15 +50,16 @@ public class NumberMorphView extends View {
     }
 
     private String getPathData(Context context) {
-        XmlLabelParser xmlLabelParser = new XmlLabelParser(context, R.drawable.vd_6);
+        String pathData;
+        XmlLabelParser xmlLabelParser = new XmlLabelParser(context, R.drawable.vd_test);
         pathData = xmlLabelParser.getLabelData("path", "pathData");
 
         return pathData;
     }
 
     private float[] getViewport(Context context) {
-        XmlLabelParser x1 = new XmlLabelParser(context, R.drawable.vd_6);
-        XmlLabelParser x2 = new XmlLabelParser(context, R.drawable.vd_6);
+        XmlLabelParser x1 = new XmlLabelParser(context, R.drawable.vd_test);
+        XmlLabelParser x2 = new XmlLabelParser(context, R.drawable.vd_test);
 
         String[] viewportStrings = {
                 x1.getLabelData("vector", "viewportWidth"),

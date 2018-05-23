@@ -2,6 +2,7 @@ package com.example.ian.numbermorph;
 
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ class DataPath extends Path {
     private final String[] commandString = {"M", "C", "L", "H", "V"};
     private float[] scaleFactors;
     private String pathData;
+    private PointF lastPointF = new PointF();
 
     DataPath(String data, float[] factors) {
         scaleFactors = factors;
@@ -31,10 +33,13 @@ class DataPath extends Path {
                     addCubicToCommand(fullCommand);
                     break;
                 case 'L':
+                    addLineToCommand(fullCommand);
                     break;
                 case 'H':
+                    addHtoCommand(fullCommand);
                     break;
                 case 'V':
+                    addVtoCommand(fullCommand);
                     break;
             }
         }
@@ -66,10 +71,12 @@ class DataPath extends Path {
 
     private void addMoveToCommand(String moveCommand) {
         PointF[] movePointFS = getPointFromCommand(moveCommand);
+        int size = movePointFS.length;
 
         for (PointF pointF : movePointFS) {
             this.moveTo(pointF.x, pointF.y);
         }
+        lastPointF = movePointFS[size - 1];
     }
 
     private void addCubicToCommand(String cubicCommand) {
@@ -80,6 +87,41 @@ class DataPath extends Path {
                 cubicPointFS[1].x, cubicPointFS[1].y,
                 cubicPointFS[2].x, cubicPointFS[2].y
         );
+        lastPointF = cubicPointFS[2];
+    }
+
+    private void addLineToCommand(String lineCommand) {
+        PointF[] linePointFS = getPointFromCommand(lineCommand);
+        int size = linePointFS.length;
+
+        for (PointF pointF : linePointFS) {
+            this.lineTo(pointF.x, pointF.y);
+        }
+        lastPointF = linePointFS[size - 1];
+    }
+
+    private void addHtoCommand(String hCommand) {
+        PointF[] hPointFS = getHPointFromCommand(hCommand);
+        int size = hPointFS.length;
+
+        for (PointF pointF : hPointFS) {
+            this.lineTo(pointF.x, pointF.y);
+        }
+        lastPointF = hPointFS[size - 1];
+    }
+
+    private void addVtoCommand(String vCommand) {
+        PointF[] vPointFS = getVPointFromCommand(vCommand);
+        for (PointF pointF : vPointFS) {
+            Log.d(TAG, "point : " + pointF.x + ", " + pointF.y);
+        }
+
+        int size = vPointFS.length;
+
+        for (PointF pointF : vPointFS) {
+            this.lineTo(pointF.x, pointF.y);
+        }
+        lastPointF = vPointFS[size - 1];
     }
 
     private PointF[] getPointFromCommand(String command) {
@@ -93,6 +135,38 @@ class DataPath extends Path {
             pointFS[i] = new PointF(
                     Float.valueOf(xyString[0]) * scaleFactors[0],
                     Float.valueOf(xyString[1]) * scaleFactors[1]
+            );
+        }
+
+        return pointFS;
+    }
+
+    private PointF[] getHPointFromCommand(String command) {
+        command = command.substring(1, command.length());
+
+        String[] pointStrings = command.split(" ");
+        PointF[] pointFS = new PointF[pointStrings.length];
+
+        for (int i = 0; i < pointStrings.length; i++) {
+            pointFS[i] = new PointF(
+                Float.valueOf(pointStrings[i]) * scaleFactors[0],
+                lastPointF.y
+            );
+        }
+
+        return pointFS;
+    }
+
+    private PointF[] getVPointFromCommand(String command) {
+        command = command.substring(1, command.length());
+
+        String[] pointStrings = command.split(" ");
+        PointF[] pointFS = new PointF[pointStrings.length];
+
+        for (int i = 0; i < pointStrings.length; i++) {
+            pointFS[i] = new PointF(
+                    lastPointF.x,
+                    Float.valueOf(pointStrings[i]) * scaleFactors[1]
             );
         }
 

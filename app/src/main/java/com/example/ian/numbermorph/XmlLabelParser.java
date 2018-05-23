@@ -50,10 +50,10 @@ class XmlLabelParser {
                         }
                         break;
                     case XmlPullParser.TEXT:
-//                        Log.d(TAG, "Text : " + xmlResourceParser.getText());
+                        Log.d(TAG, "Text : " + xmlResourceParser.getText());
                         break;
                     case XmlPullParser.END_TAG:
-//                        Log.d(TAG, "End parsing");
+                        Log.d(TAG, "End parsing");
                         break;
                     default:
                         break;
