@@ -14,7 +14,7 @@ public class NumberMorphView extends View {
     private static final String TAG = "XmlLabelParser";
 
     private DataPath path;
-    private Paint paint = new Paint();
+    private final Paint paint = new Paint();
     private final int wSize = 500;
     private final int hSize = 500;
 

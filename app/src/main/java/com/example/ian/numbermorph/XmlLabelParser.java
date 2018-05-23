@@ -14,7 +14,7 @@ class XmlLabelParser {
 
     private static final String TAG = "XmlLabelParser";
 
-    private XmlResourceParser xmlResourceParser;
+    private final XmlResourceParser xmlResourceParser;
 
     XmlLabelParser(Context context, int id) {
         xmlResourceParser = context.getResources().getXml(id);

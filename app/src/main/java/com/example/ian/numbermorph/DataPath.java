@@ -12,8 +12,8 @@ class DataPath extends Path {
     private static final String TAG = "DataPath";
 
     private final String[] commandString = {"M", "C", "L", "H", "V", "Z"};
-    private float[] scaleFactors;
-    private String pathData;
+    private final float[] scaleFactors;
+    private final String pathData;
     private PointF lastPointF = new PointF();
 
     DataPath(String data, float[] factors) {
@@ -115,10 +115,6 @@ class DataPath extends Path {
 
     private void addVtoCommand(String vCommand) {
         PointF[] vPointFS = getVPointFromCommand(vCommand);
-        for (PointF pointF : vPointFS) {
-            Log.d(TAG, "point : " + pointF.x + ", " + pointF.y);
-        }
-
         int size = vPointFS.length;
 
         for (PointF pointF : vPointFS) {
