@@ -84,9 +84,14 @@ class DataPath extends Path {
         PointF[] movePointFS = getPointFromCmd(moveCmd);
         int size = movePointFS.length;
 
-        for (PointF pointF : movePointFS) {
-            this.moveTo(pointF.x, pointF.y);
+        for (int i = 0; i < size; i++) {
+            if (i == 0) {
+                this.moveTo(movePointFS[i].x, movePointFS[i].y);
+            } else {
+                this.lineTo(movePointFS[i].x, movePointFS[i].y);
+            }
         }
+
         lastPointF = movePointFS[size - 1];
     }
 
