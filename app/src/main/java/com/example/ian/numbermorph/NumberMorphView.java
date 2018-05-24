@@ -79,6 +79,7 @@ public class NumberMorphView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        canvas.drawColor(Color.RED);
         canvas.drawPath(path, paint);
     }
 }
