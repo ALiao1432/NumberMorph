@@ -2,7 +2,6 @@ package com.example.ian.numbermorph;
 
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,69 +10,71 @@ class DataPath extends Path {
 
     private static final String TAG = "DataPath";
 
-    private final String[] commandString = {"M", "C", "L", "H", "V", "Z"};
+    private final String[] CMD_STRINGS = {"M", "C", "L", "H", "V", "Z"};
     private final float[] scaleFactors;
-    private final String pathData;
+    private final List<String> pathDataList;
     private PointF lastPointF = new PointF();
 
-    DataPath(String data, float[] factors) {
+    DataPath(List<String> data, float[] factors) {
         scaleFactors = factors;
-        pathData = data;
+        pathDataList = data;
 
         setPathData();
     }
 
     private void setPathData() {
-        for (String fullCommand : getAPathCommand(getCommandPosition(pathData))) {
-            switch (fullCommand.charAt(0)) {
-                case 'M':
-                    addMoveToCommand(fullCommand);
-                    break;
-                case 'C':
-                    addCubicToCommand(fullCommand);
-                    break;
-                case 'L':
-                    addLineToCommand(fullCommand);
-                    break;
-                case 'H':
-                    addHtoCommand(fullCommand);
-                    break;
-                case 'V':
-                    addVtoCommand(fullCommand);
-                    break;
-                case 'Z':
-                    addCloseCommand();
-                    break;
-            }
-        }
-    }
-
-    private List<String> getAPathCommand(List<Integer> positionList) {
-        List<String> fullCommandList = new ArrayList<>();
-
-        for (int i = 0; i < positionList.size() - 1; i++) {
-            fullCommandList.add(pathData.substring(positionList.get(i), positionList.get(i + 1)));
-        }
-        return fullCommandList;
-    }
-
-    private List<Integer> getCommandPosition(String s) {
-        List<Integer> commandPositionList = new ArrayList<>();
-
-        for (int i = 0; i < s.length(); i++) {
-            for (String command : commandString) {
-                if (s.substring(i, i + 1).contains(command)) {
-                    commandPositionList.add(i);
+        for (String pathData : pathDataList) {
+            for (String aCmd : getFullPathCmdList(getCmdPositionList(pathData), pathData)) {
+                switch (aCmd.charAt(0)) {
+                    case 'M':
+                        addMoveToCmd(aCmd);
+                        break;
+                    case 'C':
+                        addCubicToCmd(aCmd);
+                        break;
+                    case 'L':
+                        addLineToCmd(aCmd);
+                        break;
+                    case 'H':
+                        addHtoCmd(aCmd);
+                        break;
+                    case 'V':
+                        addVtoCmd(aCmd);
+                        break;
+                    case 'Z':
+                        addCloseCmd();
+                        break;
                 }
             }
         }
-        commandPositionList.add(s.length());
-
-        return commandPositionList;
     }
 
-    private void addMoveToCommand(String moveCommand) {
-        PointF[] movePointFS = getPointFromCommand(moveCommand);
+    private List<String> getFullPathCmdList(List<Integer> positionList, String pathData) {
+        List<String> fullCmdList = new ArrayList<>();
+
+        for (int i = 0; i < positionList.size() - 1; i++) {
+            fullCmdList.add(pathData.substring(positionList.get(i), positionList.get(i + 1)));
+        }
+        return fullCmdList;
+    }
+
+    private List<Integer> getCmdPositionList(String pathData) {
+        List<Integer> cmdPositionList = new ArrayList<>();
+
+        for (int i = 0; i < pathData.length(); i++) {
+            for (String cmd : CMD_STRINGS) {
+                if (pathData.substring(i, i + 1).contains(cmd)) {
+                    cmdPositionList.add(i);
+                }
+            }
+        }
+        cmdPositionList.add(pathData.length());
+
+        return cmdPositionList;
+    }
+
+    private void addMoveToCmd(String moveCmd) {
+        PointF[] movePointFS = getPointFromCmd(moveCmd);
         int size = movePointFS.length;
 
         for (PointF pointF : movePointFS) {
@@ -82,8 +83,8 @@ class DataPath extends Path {
         lastPointF = movePointFS[size - 1];
     }
 
-    private void addCubicToCommand(String cubicCommand) {
-        PointF[] cubicPointFS = getPointFromCommand(cubicCommand);
+    private void addCubicToCmd(String cubicCmd) {
+        PointF[] cubicPointFS = getPointFromCmd(cubicCmd);
 
         this.cubicTo(
                 cubicPointFS[0].x, cubicPointFS[0].y,
@@ -93,8 +94,8 @@ class DataPath extends Path {
         lastPointF = cubicPointFS[2];
     }
 
-    private void addLineToCommand(String lineCommand) {
-        PointF[] linePointFS = getPointFromCommand(lineCommand);
+    private void addLineToCmd(String lineCmd) {
+        PointF[] linePointFS = getPointFromCmd(lineCmd);
         int size = linePointFS.length;
 
         for (PointF pointF : linePointFS) {
@@ -103,8 +104,8 @@ class DataPath extends Path {
         lastPointF = linePointFS[size - 1];
     }
 
-    private void addHtoCommand(String hCommand) {
-        PointF[] hPointFS = getHPointFromCommand(hCommand);
+    private void addHtoCmd(String hCmd) {
+        PointF[] hPointFS = getHPointFromCmd(hCmd);
         int size = hPointFS.length;
 
         for (PointF pointF : hPointFS) {
@@ -113,8 +114,8 @@ class DataPath extends Path {
         lastPointF = hPointFS[size - 1];
     }
 
-    private void addVtoCommand(String vCommand) {
-        PointF[] vPointFS = getVPointFromCommand(vCommand);
+    private void addVtoCmd(String vCmd) {
+        PointF[] vPointFS = getVPointFromCmd(vCmd);
         int size = vPointFS.length;
 
         for (PointF pointF : vPointFS) {
@@ -123,14 +124,14 @@ class DataPath extends Path {
         lastPointF = vPointFS[size - 1];
     }
 
-    private void addCloseCommand() {
+    private void addCloseCmd() {
         this.close();
     }
 
-    private PointF[] getPointFromCommand(String command) {
-        command = command.substring(1, command.length());
+    private PointF[] getPointFromCmd(String cmd) {
+        cmd = cmd.substring(1, cmd.length());
 
-        String[] pointStrings = command.split(" ");
+        String[] pointStrings = cmd.split(" ");
         PointF[] pointFS = new PointF[pointStrings.length];
 
         for (int i = 0; i < pointStrings.length; i++) {
@@ -144,10 +145,10 @@ class DataPath extends Path {
         return pointFS;
     }
 
-    private PointF[] getHPointFromCommand(String command) {
-        command = command.substring(1, command.length());
+    private PointF[] getHPointFromCmd(String cmd) {
+        cmd = cmd.substring(1, cmd.length());
 
-        String[] pointStrings = command.split(" ");
+        String[] pointStrings = cmd.split(" ");
         PointF[] pointFS = new PointF[pointStrings.length];
 
         for (int i = 0; i < pointStrings.length; i++) {
@@ -160,10 +161,10 @@ class DataPath extends Path {
         return pointFS;
     }
 
-    private PointF[] getVPointFromCommand(String command) {
-        command = command.substring(1, command.length());
+    private PointF[] getVPointFromCmd(String cmd) {
+        cmd = cmd.substring(1, cmd.length());
 
-        String[] pointStrings = command.split(" ");
+        String[] pointStrings = cmd.split(" ");
         PointF[] pointFS = new PointF[pointStrings.length];
 
         for (int i = 0; i < pointStrings.length; i++) {

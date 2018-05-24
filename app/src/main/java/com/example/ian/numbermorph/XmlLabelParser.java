@@ -9,6 +9,8 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 class XmlLabelParser {
 
@@ -20,8 +22,8 @@ class XmlLabelParser {
         xmlResourceParser = context.getResources().getXml(id);
     }
 
-    public String getLabelData(@Nullable String labelName, @Nullable String attrName) {
-        String data = null;
+    public List<String> getLabelData(@Nullable String labelName, @Nullable String attrName) {
+        List<String> data = new ArrayList<>();
 
         try {
             int event = xmlResourceParser.getEventType();
@@ -43,7 +45,7 @@ class XmlLabelParser {
                                 if (attrName == null) {
                                     Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + xmlResourceParser.getAttributeValue(i));
                                 } else if (xmlResourceParser.getAttributeName(i).equals(attrName)) {
-                                    data = xmlResourceParser.getAttributeValue(i);
+                                    data.add(xmlResourceParser.getAttributeValue(i));
                                     Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + data);
                                 }
                             }

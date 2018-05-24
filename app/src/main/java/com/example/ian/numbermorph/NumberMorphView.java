@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import java.util.List;
+
 public class NumberMorphView extends View {
 
     private static final String TAG = "XmlLabelParser";
@@ -17,6 +19,7 @@ public class NumberMorphView extends View {
     private final Paint paint = new Paint();
     private final int wSize = 500;
     private final int hSize = 500;
+    private final int vdId = R.drawable.vd_6;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -39,7 +42,7 @@ public class NumberMorphView extends View {
         paint.setStrokeWidth(15);
     }
 
-    private void initPath(String data) {
+    private void initPath(List<String> data) {
         float[] viewports = getViewport(getContext());
         float[] scaleFactors = {
                 wSize / viewports[0],
@@ -49,21 +52,21 @@ public class NumberMorphView extends View {
         path = new DataPath(data, scaleFactors);
     }
 
-    private String getPathData(Context context) {
-        String pathData;
-        XmlLabelParser xmlLabelParser = new XmlLabelParser(context, R.drawable.vd_test);
+    private List<String> getPathData(Context context) {
+        List<String> pathData;
+        XmlLabelParser xmlLabelParser = new XmlLabelParser(context, vdId);
         pathData = xmlLabelParser.getLabelData("path", "pathData");
 
         return pathData;
     }
 
     private float[] getViewport(Context context) {
-        XmlLabelParser x1 = new XmlLabelParser(context, R.drawable.vd_test);
-        XmlLabelParser x2 = new XmlLabelParser(context, R.drawable.vd_test);
+        XmlLabelParser x1 = new XmlLabelParser(context, vdId);
+        XmlLabelParser x2 = new XmlLabelParser(context, vdId);
 
         String[] viewportStrings = {
-                x1.getLabelData("vector", "viewportWidth"),
-                x2.getLabelData("vector", "viewportHeight")
+                x1.getLabelData("vector", "viewportWidth").get(0),
+                x2.getLabelData("vector", "viewportHeight").get(0)
         };
 
         return new float[]{
