@@ -2,6 +2,7 @@ package com.example.ian.numbermorph;
 
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,10 @@ class DataPath extends Path {
 
     private static final String TAG = "DataPath";
 
-    private final String[] CMD_STRINGS = {"M", "C", "L", "H", "V", "Z"};
+    private final String[] CMD_STRINGS = {
+            "M", "C", "L", "H", "V", "Z",
+            "m", "c", "l", "h", "v"
+    };
     private final float[] scaleFactors;
     private final List<String> pathDataList;
     private PointF lastPointF = new PointF();
@@ -34,6 +38,9 @@ class DataPath extends Path {
                         break;
                     case 'L':
                         addLineToCmd(aCmd);
+                        break;
+                    case 'l':
+                        addRLineToCmd(aCmd);
                         break;
                     case 'H':
                         addHtoCmd(aCmd);
@@ -102,6 +109,16 @@ class DataPath extends Path {
             this.lineTo(pointF.x, pointF.y);
         }
         lastPointF = linePointFS[size - 1];
+    }
+
+    private void addRLineToCmd(String rLineCmd) {
+        PointF[] rLinePointFS = getPointFromCmd(rLineCmd);
+        int size = rLinePointFS.length;
+
+        for (PointF pointF : rLinePointFS) {
+            this.rLineTo(pointF.x, pointF.y);
+        }
+        lastPointF = rLinePointFS[size - 1];
     }
 
     private void addHtoCmd(String hCmd) {

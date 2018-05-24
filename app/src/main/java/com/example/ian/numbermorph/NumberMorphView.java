@@ -19,7 +19,7 @@ public class NumberMorphView extends View {
     private final Paint paint = new Paint();
     private final int wSize = 500;
     private final int hSize = 500;
-    private final int vdId = R.drawable.vd_6;
+    private final int vdId = R.drawable.vd_test;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
