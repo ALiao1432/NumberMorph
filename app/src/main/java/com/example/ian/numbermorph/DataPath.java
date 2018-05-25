@@ -21,6 +21,7 @@ class DataPath extends Path {
     };
     private final float[] scaleFactors;
     private final List<String> pathDataList;
+    private List<PointF> pointFList = new ArrayList<>();
     private PointF lastPointF = new PointF();
 
     DataPath(List<String> data, float[] factors) {
@@ -206,6 +207,7 @@ class DataPath extends Path {
                     Float.valueOf(xyString[0]) * scaleFactors[0],
                     Float.valueOf(xyString[1]) * scaleFactors[1]
             );
+            pointFList.add(pointFS[i]);
         }
 
         return pointFS;
@@ -222,6 +224,7 @@ class DataPath extends Path {
                     Float.valueOf(pointStrings[i]) * scaleFactors[0],
                     lastPointF.y
             );
+            pointFList.add(pointFS[i]);
         }
 
         return pointFS;
@@ -238,6 +241,7 @@ class DataPath extends Path {
                     lastPointF.x,
                     Float.valueOf(pointStrings[i]) * scaleFactors[1]
             );
+            pointFList.add(pointFS[i]);
         }
 
         return pointFS;
