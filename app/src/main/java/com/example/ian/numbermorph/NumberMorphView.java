@@ -1,38 +1,44 @@
 package com.example.ian.numbermorph;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-
-import java.util.List;
+import android.view.animation.OvershootInterpolator;
 
 public class NumberMorphView extends View {
 
     private static final String TAG = "XmlLabelParser";
 
     private DataPath path;
+    private SvgData svgData;
+    public static final int W_SIZE = 500;
+    public static final int H_SIZE = 500;
+    private final int VD_ID = R.drawable.vd_6;
     private final Paint paint = new Paint();
-    private final int wSize = 500;
-    private final int hSize = 500;
-    private final int vdId = R.drawable.vd_test;
-
+    private ValueAnimator pointAnimator;
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        setMeasuredDimension(wSize, hSize);
+        setMeasuredDimension(W_SIZE, H_SIZE);
     }
 
+    @SuppressWarnings("ClickableViewAccessibility")
     NumberMorphView(Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
 
         initPaint();
-        initPath(getPathData(context));
+        initAnimator();
+
+        svgData = new SvgData(context);
+        svgData.setMorphRes(R.drawable.vd_pause_bar, R.drawable.vd_pause_bar);
+
+        path = svgData.getMorphPath(0f);
     }
 
     private void initPaint() {
@@ -42,37 +48,17 @@ public class NumberMorphView extends View {
         paint.setStrokeWidth(15);
     }
 
-    private void initPath(List<String> data) {
-        float[] viewports = getViewport(getContext());
-        float[] scaleFactors = {
-                wSize / viewports[0],
-                hSize / viewports[1],
-        };
+    private void initAnimator() {
+        OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
+        long animationDuration = 170;
 
-        path = new DataPath(data, scaleFactors);
-    }
-
-    private List<String> getPathData(Context context) {
-        List<String> pathData;
-        XmlLabelParser xmlLabelParser = new XmlLabelParser(context, vdId);
-        pathData = xmlLabelParser.getLabelData("path", "pathData");
-
-        return pathData;
-    }
-
-    private float[] getViewport(Context context) {
-        XmlLabelParser x1 = new XmlLabelParser(context, vdId);
-        XmlLabelParser x2 = new XmlLabelParser(context, vdId);
-
-        String[] viewportStrings = {
-                x1.getLabelData("vector", "viewportWidth").get(0),
-                x2.getLabelData("vector", "viewportHeight").get(0)
-        };
-
-        return new float[]{
-                Float.valueOf(viewportStrings[0]),
-                Float.valueOf(viewportStrings[1])
-        };
+        pointAnimator = ValueAnimator.ofFloat(0, 1);
+        pointAnimator.setDuration(animationDuration);
+        pointAnimator.setInterpolator(overshootInterpolator);
+        pointAnimator.addUpdateListener(valueAnimator -> {
+//            path = svgData.getMorphPath((float) valueAnimator.getAnimatedValue());
+            invalidate();
+        });
     }
 
     @Override

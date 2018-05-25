@@ -19,21 +19,24 @@ class DataPath extends Path {
             "V", "v",
             "Z",
     };
-    private final float[] scaleFactors;
-    private final List<String> pathDataList;
-    private List<PointF> pointFList = new ArrayList<>();
+    private float[] scaleFactors;
+    private List<String> pathDataList;
     private PointF lastPointF = new PointF();
+    private List<String> fromCmdList = new ArrayList<>();
+    private List<String> toCmdList = new ArrayList<>();
 
     DataPath(List<String> data, float[] factors) {
         scaleFactors = factors;
         pathDataList = data;
-
-        setPathData();
     }
 
-    private void setPathData() {
+    DataPath() {
+        super();
+    }
+
+    public void setPath() {
         for (String pathData : pathDataList) {
-            for (String aCmd : getFullPathCmdList(getCmdPositionList(pathData), pathData)) {
+            for (String aCmd : getFullPathCmdList(pathData)) {
                 switch (aCmd.charAt(0)) {
                     case 'M':
                         addMoveToCmd(aCmd);
@@ -70,8 +73,53 @@ class DataPath extends Path {
         }
     }
 
-    private List<String> getFullPathCmdList(List<Integer> positionList, String pathData) {
+    public void setMorphPath(List<String> fromList, List<String> toList) {
+        for (int i = 0; i < fromList.size(); i++) {
+            fromCmdList.addAll(getFullPathCmdList(fromList.get(i)));
+            toCmdList.addAll(getFullPathCmdList(toList.get(i)));
+        }
+    }
+
+    private void getMorphPath(float mFactor) {
+        for (int i = 0; i < fromCmdList.size(); i++) {
+            switch (fromCmdList.get(i).charAt(0)) {
+                case 'M':
+                    addMoveToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+                case 'C':
+                    addCubicToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+//                case 'c':
+//                    addRCubicToCmd(aCmd);
+//                    break;
+//                case 'L':
+//                    addLineToCmd(aCmd);
+//                    break;
+//                case 'l':
+//                    addRLineToCmd(aCmd);
+//                    break;
+//                case 'H':
+//                    addHtoCmd(aCmd);
+//                    break;
+//                case 'h':
+//                    addRHtoCmd(aCmd);
+//                    break;
+//                case 'V':
+//                    addVtoCmd(aCmd);
+//                    break;
+//                case 'v':
+//                    addRVtoCmd(aCmd);
+//                    break;
+//                case 'Z':
+//                    addCloseCmd();
+                    break;
+            }
+        }
+    }
+
+    private List<String> getFullPathCmdList(String pathData) {
         List<String> fullCmdList = new ArrayList<>();
+        List<Integer> positionList = getCmdPositionList(pathData);
 
         for (int i = 0; i < positionList.size() - 1; i++) {
             fullCmdList.add(pathData.substring(positionList.get(i), positionList.get(i + 1)));
@@ -109,9 +157,49 @@ class DataPath extends Path {
         lastPointF = movePointFS[size - 1];
     }
 
+    private void addMoveToCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getPointFromCmd(fromCmd);
+        PointF[] toPointFS = getPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        for (int i = 0; i < size; i++) {
+            float tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            float tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+
+            if (i == 0) {
+                this.moveTo(tempX, tempY);
+            } else {
+                this.lineTo(tempX, tempY);
+            }
+
+            if (i == (size - 1)) {
+                lastPointF.set(tempX, tempY);
+            }
+        }
+    }
+
     private void addCubicToCmd(String cubicCmd) {
         PointF[] cubicPointFS = getPointFromCmd(cubicCmd);
 
+        this.cubicTo(
+                cubicPointFS[0].x, cubicPointFS[0].y,
+                cubicPointFS[1].x, cubicPointFS[1].y,
+                cubicPointFS[2].x, cubicPointFS[2].y
+        );
+        lastPointF = cubicPointFS[2];
+    }
+
+    private void addCubicToCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getPointFromCmd(fromCmd);
+        PointF[] toPointFS = getPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        float tempX;
+        float tempY;
+        for (int i = 0; i < size; i++) {
+            tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+        }
         this.cubicTo(
                 cubicPointFS[0].x, cubicPointFS[0].y,
                 cubicPointFS[1].x, cubicPointFS[1].y,
@@ -207,7 +295,6 @@ class DataPath extends Path {
                     Float.valueOf(xyString[0]) * scaleFactors[0],
                     Float.valueOf(xyString[1]) * scaleFactors[1]
             );
-            pointFList.add(pointFS[i]);
         }
 
         return pointFS;
@@ -224,7 +311,6 @@ class DataPath extends Path {
                     Float.valueOf(pointStrings[i]) * scaleFactors[0],
                     lastPointF.y
             );
-            pointFList.add(pointFS[i]);
         }
 
         return pointFS;
@@ -241,7 +327,6 @@ class DataPath extends Path {
                     lastPointF.x,
                     Float.valueOf(pointStrings[i]) * scaleFactors[1]
             );
-            pointFList.add(pointFS[i]);
         }
 
         return pointFS;

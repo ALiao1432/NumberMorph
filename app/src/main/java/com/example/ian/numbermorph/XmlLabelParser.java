@@ -32,30 +32,30 @@ class XmlLabelParser {
                 event = xmlResourceParser.next();
                 switch (event) {
                     case XmlPullParser.START_DOCUMENT:
-                        Log.d(TAG, "Start parsing");
+//                        Log.d(TAG, "Start parsing");
                         break;
                     case XmlPullParser.START_TAG:
-                        Log.d(TAG, "Current Label : " + xmlResourceParser.getName());
+//                        Log.d(TAG, "Current Label : " + xmlResourceParser.getName());
                         if (labelName == null) {
                             for (int i = 0; i < xmlResourceParser.getAttributeCount(); i++) {
-                                Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + xmlResourceParser.getAttributeValue(i));
+//                                Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + xmlResourceParser.getAttributeValue(i));
                             }
                         } else if (xmlResourceParser.getName().equals(labelName)) {
                             for (int i = 0; i < xmlResourceParser.getAttributeCount(); i++) {
                                 if (attrName == null) {
-                                    Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + xmlResourceParser.getAttributeValue(i));
+//                                    Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + xmlResourceParser.getAttributeValue(i));
                                 } else if (xmlResourceParser.getAttributeName(i).equals(attrName)) {
                                     data.add(xmlResourceParser.getAttributeValue(i));
-                                    Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + data);
+//                                    Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + data);
                                 }
                             }
                         }
                         break;
                     case XmlPullParser.TEXT:
-                        Log.d(TAG, "Text : " + xmlResourceParser.getText());
+//                        Log.d(TAG, "Text : " + xmlResourceParser.getText());
                         break;
                     case XmlPullParser.END_TAG:
-                        Log.d(TAG, "End parsing");
+//                        Log.d(TAG, "End parsing");
                         break;
                     default:
                         break;
