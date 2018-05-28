@@ -5,11 +5,11 @@ import android.util.Log;
 
 import java.util.List;
 
-public class SvgData {
+class SvgData {
 
     private static final String TAG = "SvgData";
 
-    private Context context;
+    private final Context context;
     private DataPath morphPath;
 
     SvgData(Context context) {

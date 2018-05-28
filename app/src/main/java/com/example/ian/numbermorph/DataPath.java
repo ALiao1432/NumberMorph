@@ -19,11 +19,11 @@ class DataPath extends Path {
             "V", "v",
             "Z",
     };
-    private float[] scaleFactors;
-    private List<String> pathDataList;
+    private final float[] scaleFactors;
     private PointF lastPointF = new PointF();
-    private List<String> fromCmdList = new ArrayList<>();
-    private List<String> toCmdList = new ArrayList<>();
+    private List<String> pathDataList;
+    private final List<String> fromCmdList = new ArrayList<>();
+    private final List<String> toCmdList = new ArrayList<>();
 
     DataPath(List<String> data, float[] factors) {
         scaleFactors = factors;

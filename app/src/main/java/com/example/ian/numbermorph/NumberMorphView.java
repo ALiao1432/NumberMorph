@@ -14,12 +14,12 @@ public class NumberMorphView extends View {
 
     private static final String TAG = "XmlLabelParser";
 
-    private DataPath path;
-    private SvgData svgData;
     public static final int W_SIZE = 500;
     public static final int H_SIZE = 500;
-    private final Paint paint = new Paint();
+    private DataPath path;
     private ValueAnimator pointAnimator;
+    private final SvgData svgData;
+    private final Paint paint = new Paint();
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -32,7 +32,10 @@ public class NumberMorphView extends View {
     NumberMorphView(Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
 
-        final int[] VD_ID = {R.drawable.vd_test_fulfill_2, R.drawable.vd_test_fulfill_1};
+        final int[] VD_ID = {
+                R.drawable.vd_6,
+                R.drawable.vd_8
+        };
 
         initPaint();
         initAnimator();
