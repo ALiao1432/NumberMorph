@@ -92,27 +92,27 @@ class DataPath extends Path {
                 case 'c':
                     addRCubicToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
                     break;
-//                case 'L':
-//                    addLineToCmd(aCmd);
-//                    break;
-//                case 'l':
-//                    addRLineToCmd(aCmd);
-//                    break;
-//                case 'H':
-//                    addHtoCmd(aCmd);
-//                    break;
-//                case 'h':
-//                    addRHtoCmd(aCmd);
-//                    break;
-//                case 'V':
-//                    addVtoCmd(aCmd);
-//                    break;
-//                case 'v':
-//                    addRVtoCmd(aCmd);
-//                    break;
-//                case 'Z':
-//                    addCloseCmd();
-//                    break;
+                case 'L':
+                    addLineToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+                case 'l':
+                    addRLineToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+                case 'H':
+                    addHtoCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+                case 'h':
+                    addRHtoCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+                case 'V':
+                    addVtoCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+                case 'v':
+                    addRVtoCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+                case 'Z':
+                    addCloseCmd();
+                    break;
             }
         }
     }
@@ -248,15 +248,22 @@ class DataPath extends Path {
         lastPointF = linePointFS[size - 1];
     }
 
-//    private void addLineToCmd(String fromCmd, String toCmd, float mFactor) {
-//        PointF[] linePointFS = getPointFromCmd(lineCmd);
-//        int size = linePointFS.length;
-//
-//        for (PointF pointF : linePointFS) {
-//            this.lineTo(pointF.x, pointF.y);
-//        }
-//        lastPointF = linePointFS[size - 1];
-//    }
+    private void addLineToCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getPointFromCmd(fromCmd);
+        PointF[] toPointFS = getPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        for (int i = 0; i < size; i++) {
+            float tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            float tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+
+            this.lineTo(tempX, tempY);
+
+            if (i == size - 1) {
+                lastPointF.set(tempX, tempY);
+            }
+        }
+    }
 
     private void addRLineToCmd(String rLineCmd) {
         PointF[] rLinePointFS = getPointFromCmd(rLineCmd);
@@ -266,6 +273,23 @@ class DataPath extends Path {
             this.rLineTo(pointF.x, pointF.y);
         }
         lastPointF = rLinePointFS[size - 1];
+    }
+
+    private void addRLineToCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getPointFromCmd(fromCmd);
+        PointF[] toPointFS = getPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        for (int i = 0; i < size; i++) {
+            float tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            float tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+
+            this.rLineTo(tempX, tempY);
+
+            if (i == size - 1) {
+                lastPointF.set(tempX, tempY);
+            }
+        }
     }
 
     private void addHtoCmd(String hCmd) {
@@ -278,6 +302,23 @@ class DataPath extends Path {
         lastPointF = hPointFS[size - 1];
     }
 
+    private void addHtoCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getHPointFromCmd(fromCmd);
+        PointF[] toPointFS = getHPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        for (int i = 0; i < size; i++) {
+            float tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            float tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+
+            this.lineTo(tempX, tempY);
+
+            if (i == size - 1) {
+                lastPointF.set(tempX, tempY);
+            }
+        }
+    }
+
     private void addRHtoCmd(String rHCmd) {
         PointF[] rHPointFS = getHPointFromCmd(rHCmd);
         int size = rHPointFS.length;
@@ -286,6 +327,24 @@ class DataPath extends Path {
             this.rLineTo(pointF.x, 0);
         }
         lastPointF = rHPointFS[size - 1];
+    }
+
+    private void addRHtoCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getHPointFromCmd(fromCmd);
+        PointF[] toPointFS = getHPointFromCmd(toCmd);
+        Log.d(TAG, "fromCmd : " + fromCmd + ", toCmd : " + toCmd);
+        int size = fromPointFS.length;
+
+        for (int i = 0; i < size; i++) {
+            float tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            float tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+
+            this.rLineTo(tempX, 0);
+
+            if (i == size - 1) {
+                lastPointF.set(tempX, tempY);
+            }
+        }
     }
 
     private void addVtoCmd(String vCmd) {
@@ -298,6 +357,23 @@ class DataPath extends Path {
         lastPointF = vPointFS[size - 1];
     }
 
+    private void addVtoCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getVPointFromCmd(fromCmd);
+        PointF[] toPointFS = getVPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        for (int i = 0; i < size; i++) {
+            float tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            float tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+
+            this.lineTo(tempX, tempY);
+
+            if (i == size - 1) {
+                lastPointF.set(tempX, tempY);
+            }
+        }
+    }
+
     private void addRVtoCmd(String rVCmd) {
         PointF[] rVPointFS = getVPointFromCmd(rVCmd);
         int size = rVPointFS.length;
@@ -306,6 +382,23 @@ class DataPath extends Path {
             this.rLineTo(0, pointF.y);
         }
         lastPointF = rVPointFS[size - 1];
+    }
+
+    private void addRVtoCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getVPointFromCmd(fromCmd);
+        PointF[] toPointFS = getVPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        for (int i = 0; i < size; i++) {
+            float tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            float tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+
+            this.rLineTo(0, tempY);
+
+            if (i == size - 1) {
+                lastPointF.set(tempX, tempY);
+            }
+        }
     }
 
     private void addCloseCmd() {

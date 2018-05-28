@@ -18,7 +18,6 @@ public class NumberMorphView extends View {
     private SvgData svgData;
     public static final int W_SIZE = 500;
     public static final int H_SIZE = 500;
-    private final int VD_ID = R.drawable.vd_6;
     private final Paint paint = new Paint();
     private ValueAnimator pointAnimator;
 
@@ -33,11 +32,13 @@ public class NumberMorphView extends View {
     NumberMorphView(Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
 
+        final int[] VD_ID = {R.drawable.vd_test_1, R.drawable.vd_test_2};
+
         initPaint();
         initAnimator();
 
         svgData = new SvgData(context);
-        svgData.setMorphRes(R.drawable.vd_6, R.drawable.vd_8);
+        svgData.setMorphRes(VD_ID[0], VD_ID[1]);
 
         path = svgData.getMorphPath(0f);
         this.setOnClickListener(v -> pointAnimator.start());
@@ -52,7 +53,7 @@ public class NumberMorphView extends View {
 
     private void initAnimator() {
         OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
-        long animationDuration = 250;
+        final long animationDuration = 5000;
 
         pointAnimator = ValueAnimator.ofFloat(0, 1);
         pointAnimator.setDuration(animationDuration);
