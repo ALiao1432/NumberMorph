@@ -19,7 +19,11 @@ public class SvgData {
     public void setMorphRes(int fromId, int toId) {
         List<String> fromCmdList = this.getPathData(context, fromId);
         List<String> toCmdList = this.getPathData(context, toId);
-        float[] scaleFactors = getViewport(context, fromId);
+        float[] viewports = getViewport(context, fromId);
+        float[] scaleFactors = {
+                NumberMorphView.W_SIZE / viewports[0],
+                NumberMorphView.H_SIZE / viewports[1],
+        };
 
         morphPath = new DataPath(scaleFactors);
         morphPath.setMorphPath(fromCmdList, toCmdList);

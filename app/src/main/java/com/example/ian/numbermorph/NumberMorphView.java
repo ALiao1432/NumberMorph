@@ -32,7 +32,7 @@ public class NumberMorphView extends View {
     NumberMorphView(Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
 
-        final int[] VD_ID = {R.drawable.vd_test_1, R.drawable.vd_test_2};
+        final int[] VD_ID = {R.drawable.vd_test_fulfill_2, R.drawable.vd_test_fulfill_1};
 
         initPaint();
         initAnimator();
@@ -41,7 +41,9 @@ public class NumberMorphView extends View {
         svgData.setMorphRes(VD_ID[0], VD_ID[1]);
 
         path = svgData.getMorphPath(0f);
-        this.setOnClickListener(v -> pointAnimator.start());
+        this.setOnClickListener(v -> {
+            pointAnimator.start();
+        });
     }
 
     private void initPaint() {
@@ -53,7 +55,7 @@ public class NumberMorphView extends View {
 
     private void initAnimator() {
         OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
-        final long animationDuration = 5000;
+        final long animationDuration = 250;
 
         pointAnimator = ValueAnimator.ofFloat(0, 1);
         pointAnimator.setDuration(animationDuration);
@@ -69,6 +71,7 @@ public class NumberMorphView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        canvas.drawColor(Color.RED);
         canvas.drawPath(path, paint);
     }
 }
