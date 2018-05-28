@@ -53,7 +53,7 @@ public class NumberMorphView extends View {
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.parseColor("#212121"));
-        paint.setStrokeWidth(15);
+        paint.setStrokeWidth(36);
     }
 
     private void initAnimator() {
@@ -74,7 +74,6 @@ public class NumberMorphView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawColor(Color.RED);
         canvas.drawPath(path, paint);
     }
 }
