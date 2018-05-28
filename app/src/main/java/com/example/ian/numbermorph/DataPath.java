@@ -30,8 +30,8 @@ class DataPath extends Path {
         pathDataList = data;
     }
 
-    DataPath() {
-        super();
+    DataPath(float[] factors) {
+        scaleFactors = factors;
     }
 
     public void setPath() {
@@ -80,7 +80,7 @@ class DataPath extends Path {
         }
     }
 
-    private void getMorphPath(float mFactor) {
+    public void getMorphPath(float mFactor) {
         for (int i = 0; i < fromCmdList.size(); i++) {
             switch (fromCmdList.get(i).charAt(0)) {
                 case 'M':
@@ -89,9 +89,9 @@ class DataPath extends Path {
                 case 'C':
                     addCubicToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
                     break;
-//                case 'c':
-//                    addRCubicToCmd(aCmd);
-//                    break;
+                case 'c':
+                    addRCubicToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
 //                case 'L':
 //                    addLineToCmd(aCmd);
 //                    break;
@@ -112,7 +112,7 @@ class DataPath extends Path {
 //                    break;
 //                case 'Z':
 //                    addCloseCmd();
-                    break;
+//                    break;
             }
         }
     }
@@ -194,18 +194,18 @@ class DataPath extends Path {
         PointF[] toPointFS = getPointFromCmd(toCmd);
         int size = fromPointFS.length;
 
-        float tempX;
-        float tempY;
+        float[] tempXS = new float[3];
+        float[] tempYS = new float[3];
         for (int i = 0; i < size; i++) {
-            tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
-            tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+            tempXS[i] = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            tempYS[i] = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
         }
         this.cubicTo(
-                cubicPointFS[0].x, cubicPointFS[0].y,
-                cubicPointFS[1].x, cubicPointFS[1].y,
-                cubicPointFS[2].x, cubicPointFS[2].y
+                tempXS[0], tempYS[0],
+                tempXS[1], tempYS[1],
+                tempXS[2], tempYS[2]
         );
-        lastPointF = cubicPointFS[2];
+        lastPointF.set(tempXS[2], tempYS[2]);
     }
 
     private void addRCubicToCmd(String rCubicCmd) {
@@ -219,6 +219,25 @@ class DataPath extends Path {
         lastPointF = rCubicPointFS[2];
     }
 
+    private void addRCubicToCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getPointFromCmd(fromCmd);
+        PointF[] toPointFS = getPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        float[] tempXS = new float[3];
+        float[] tempYS = new float[3];
+        for (int i = 0; i < size; i++) {
+            tempXS[i] = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            tempYS[i] = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+        }
+        this.rCubicTo(
+                tempXS[0], tempYS[0],
+                tempXS[1], tempYS[1],
+                tempXS[2], tempYS[2]
+        );
+        lastPointF.set(tempXS[2], tempYS[2]);
+    }
+
     private void addLineToCmd(String lineCmd) {
         PointF[] linePointFS = getPointFromCmd(lineCmd);
         int size = linePointFS.length;
@@ -228,6 +247,16 @@ class DataPath extends Path {
         }
         lastPointF = linePointFS[size - 1];
     }
+
+//    private void addLineToCmd(String fromCmd, String toCmd, float mFactor) {
+//        PointF[] linePointFS = getPointFromCmd(lineCmd);
+//        int size = linePointFS.length;
+//
+//        for (PointF pointF : linePointFS) {
+//            this.lineTo(pointF.x, pointF.y);
+//        }
+//        lastPointF = linePointFS[size - 1];
+//    }
 
     private void addRLineToCmd(String rLineCmd) {
         PointF[] rLinePointFS = getPointFromCmd(rLineCmd);

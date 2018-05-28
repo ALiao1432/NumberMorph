@@ -12,21 +12,23 @@ public class SvgData {
     private Context context;
     private List<String> fromCmdList;
     private List<String> toCmdList;
-    private DataPath morphPath = new DataPath();
+    private DataPath morphPath;
 
     SvgData(Context context) {
         this.context = context;
     }
 
     public void setMorphRes(int fromId, int toId) {
+        float[] scaleFactors = getViewport(context, fromId);
         fromCmdList = this.getPathData(context, fromId);
         toCmdList = this.getPathData(context, toId);
 
+        morphPath = new DataPath(scaleFactors);
         morphPath.setMorphPath(fromCmdList, toCmdList);
     }
 
     public DataPath getMorphPath(float mFactor) {
-
+        morphPath.getMorphPath(mFactor);
         return morphPath;
     }
 
