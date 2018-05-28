@@ -10,8 +10,6 @@ public class SvgData {
     private static final String TAG = "SvgData";
 
     private Context context;
-    private List<String> fromCmdList;
-    private List<String> toCmdList;
     private DataPath morphPath;
 
     SvgData(Context context) {
@@ -19,9 +17,9 @@ public class SvgData {
     }
 
     public void setMorphRes(int fromId, int toId) {
+        List<String> fromCmdList = this.getPathData(context, fromId);
+        List<String> toCmdList = this.getPathData(context, toId);
         float[] scaleFactors = getViewport(context, fromId);
-        fromCmdList = this.getPathData(context, fromId);
-        toCmdList = this.getPathData(context, toId);
 
         morphPath = new DataPath(scaleFactors);
         morphPath.setMorphPath(fromCmdList, toCmdList);
