@@ -20,10 +20,10 @@ class DataPath extends Path {
             "Z",
     };
     private final float[] scaleFactors;
-    private PointF lastPointF = new PointF();
-    private List<String> pathDataList;
     private final List<String> fromCmdList = new ArrayList<>();
     private final List<String> toCmdList = new ArrayList<>();
+    private PointF lastPointF = new PointF();
+    private List<String> pathDataList;
 
     DataPath(List<String> data, float[] factors) {
         scaleFactors = factors;
@@ -34,7 +34,7 @@ class DataPath extends Path {
         scaleFactors = factors;
     }
 
-    public void setPath() {
+    public void getPath() {
         for (String pathData : pathDataList) {
             for (String aCmd : getFullPathCmdList(pathData)) {
                 switch (aCmd.charAt(0)) {
@@ -332,7 +332,6 @@ class DataPath extends Path {
     private void addRHtoCmd(String fromCmd, String toCmd, float mFactor) {
         PointF[] fromPointFS = getHPointFromCmd(fromCmd);
         PointF[] toPointFS = getHPointFromCmd(toCmd);
-        Log.d(TAG, "fromCmd : " + fromCmd + ", toCmd : " + toCmd);
         int size = fromPointFS.length;
 
         for (int i = 0; i < size; i++) {

@@ -1,7 +1,6 @@
 package com.example.ian.numbermorph;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.List;
 
@@ -44,7 +43,7 @@ class SvgData {
         List<String> data = getPathData(context, vdId);
         DataPath dPath = new DataPath(data, scaleFactors);
 
-        dPath.setPath();
+        dPath.getPath();
         return dPath;
     }
 
