@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -14,8 +15,8 @@ public class NumberMorphView extends View {
 
     private static final String TAG = "XmlLabelParser";
 
-    public static final int W_SIZE = 500;
-    public static final int H_SIZE = 500;
+    public static final int W_SIZE = 150;
+    public static final int H_SIZE = 150;
     private final SvgData svgData;
     private final Paint paint = new Paint();
     private DataPath path;
@@ -43,8 +44,8 @@ public class NumberMorphView extends View {
     private void initPaint() {
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.parseColor("#212121"));
-        paint.setStrokeWidth(36);
+        paint.setColor(Color.parseColor("#e8eaf6"));
+        paint.setStrokeWidth(W_SIZE / 14);
     }
 
     private void initAnimator() {
@@ -81,6 +82,7 @@ public class NumberMorphView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        canvas.drawColor(Color.RED);
         canvas.drawPath(path, paint);
     }
 }
