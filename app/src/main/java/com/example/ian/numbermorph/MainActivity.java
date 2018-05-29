@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        numberMorphView.setSize(500, 500);
         numberMorphView.setOnClickListener(v -> {
             currentCnt++;
             if (currentCnt == 10) {

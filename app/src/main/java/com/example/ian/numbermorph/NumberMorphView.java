@@ -15,8 +15,8 @@ public class NumberMorphView extends View {
 
     private static final String TAG = "XmlLabelParser";
 
-    public static final int W_SIZE = 150;
-    public static final int H_SIZE = 150;
+    private int W_SIZE = 150;
+    private int H_SIZE = 150;
     private final SvgData svgData;
     private final Paint paint = new Paint();
     private DataPath path;
@@ -28,6 +28,8 @@ public class NumberMorphView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         setMeasuredDimension(W_SIZE, H_SIZE);
+
+        initPath(R.drawable.vd_0);
     }
 
     @SuppressWarnings("ClickableViewAccessibility")
@@ -38,7 +40,6 @@ public class NumberMorphView extends View {
 
         initPaint();
         initAnimator();
-        initPath(R.drawable.vd_0);
     }
 
     private void initPaint() {
@@ -63,14 +64,27 @@ public class NumberMorphView extends View {
     }
 
     private void initPath(int id) {
-        path = svgData.getPath(id);
+        path = svgData.getPath(id, this);
         currentId = id;
     }
 
     public void performAnimation(int toId) {
-        svgData.setMorphRes(currentId, toId);
+        svgData.setMorphRes(currentId, toId, this);
         currentId = toId;
         pointAnimator.start();
+    }
+
+    public void setSize(int w, int h) {
+        this.W_SIZE = w;
+        this.H_SIZE = h;
+    }
+
+    public int getW_SIZE() {
+        return W_SIZE;
+    }
+
+    public int getH_SIZE() {
+        return H_SIZE;
     }
 
     public void setCurrentId(int id) {

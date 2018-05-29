@@ -15,13 +15,13 @@ class SvgData {
         this.context = context;
     }
 
-    public void setMorphRes(int fromId, int toId) {
+    public void setMorphRes(int fromId, int toId, NumberMorphView view) {
         List<String> fromCmdList = this.getPathData(context, fromId);
         List<String> toCmdList = this.getPathData(context, toId);
         float[] viewports = getViewport(context, fromId);
         float[] scaleFactors = {
-                NumberMorphView.W_SIZE / viewports[0],
-                NumberMorphView.H_SIZE / viewports[1],
+                view.getW_SIZE() / viewports[0],
+                view.getH_SIZE() / viewports[1],
         };
 
         morphPath = new DataPath(scaleFactors);
@@ -34,11 +34,11 @@ class SvgData {
     }
 
     // get path for single vector drawable
-    public DataPath getPath(int vdId) {
+    public DataPath getPath(int vdId, NumberMorphView view) {
         float[] viewports = getViewport(context, vdId);
         float[] scaleFactors = {
-                NumberMorphView.W_SIZE / viewports[0],
-                NumberMorphView.H_SIZE / viewports[1],
+                view.getW_SIZE() / viewports[0],
+                view.getH_SIZE() / viewports[1],
         };
         List<String> data = getPathData(context, vdId);
         DataPath dPath = new DataPath(data, scaleFactors);
