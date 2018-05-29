@@ -51,7 +51,7 @@ public class NumberMorphView extends View {
         LinearInterpolator linearInterpolator = new LinearInterpolator();
         final long animationDuration = 250;
 
-        pointAnimator = ValueAnimator.ofFloat(0, 1, 1.05f, 1.025f, 1);
+        pointAnimator = ValueAnimator.ofFloat(0, 1, 1.025f, 1.0125f, 1);
         pointAnimator.setDuration(animationDuration);
         pointAnimator.setInterpolator(linearInterpolator);
         pointAnimator.addUpdateListener(valueAnimator -> {
