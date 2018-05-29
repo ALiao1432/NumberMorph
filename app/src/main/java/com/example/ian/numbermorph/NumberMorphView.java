@@ -8,7 +8,7 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
+import android.view.animation.LinearInterpolator;
 
 public class NumberMorphView extends View {
 
@@ -16,10 +16,11 @@ public class NumberMorphView extends View {
 
     public static final int W_SIZE = 500;
     public static final int H_SIZE = 500;
-    private DataPath path;
-    private ValueAnimator pointAnimator;
     private final SvgData svgData;
     private final Paint paint = new Paint();
+    private DataPath path;
+    private ValueAnimator pointAnimator;
+    private int currentId;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -32,21 +33,11 @@ public class NumberMorphView extends View {
     NumberMorphView(Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
 
-        final int[] VD_ID = {
-                R.drawable.vd_6,
-                R.drawable.vd_8
-        };
+        svgData = new SvgData(context);
 
         initPaint();
         initAnimator();
-
-        svgData = new SvgData(context);
-        svgData.setMorphRes(VD_ID[0], VD_ID[1]);
-
-        path = svgData.getMorphPath(0f);
-        this.setOnClickListener(v -> {
-            pointAnimator.start();
-        });
+        initPath(R.drawable.vd_0);
     }
 
     private void initPaint() {
@@ -57,17 +48,33 @@ public class NumberMorphView extends View {
     }
 
     private void initAnimator() {
-        OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
+        LinearInterpolator linearInterpolator = new LinearInterpolator();
         final long animationDuration = 250;
 
-        pointAnimator = ValueAnimator.ofFloat(0, 1);
+        pointAnimator = ValueAnimator.ofFloat(0, 1, 1.05f, 1.025f, 1);
         pointAnimator.setDuration(animationDuration);
-        pointAnimator.setInterpolator(overshootInterpolator);
+        pointAnimator.setInterpolator(linearInterpolator);
         pointAnimator.addUpdateListener(valueAnimator -> {
             path.reset();
             path = svgData.getMorphPath((float) valueAnimator.getAnimatedValue());
             invalidate();
         });
+    }
+
+    private void initPath(int id) {
+        path = svgData.getPath(id);
+        currentId = id;
+    }
+
+    public void performAnimation(int toId) {
+        svgData.setMorphRes(currentId, toId);
+        currentId = toId;
+        pointAnimator.start();
+    }
+
+    public void setCurrentId(int id) {
+        initPath(id);
+        invalidate();
     }
 
     @Override
