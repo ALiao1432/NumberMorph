@@ -8,13 +8,187 @@
     tools:context=".MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <com.example.ian.numbermorph.NumberMorphView
-        android:id="@+id/numberMorphView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+    <LinearLayout
+        android:id="@+id/yyyy_Layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/MMdd_Layout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/y0_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/y1_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/y2_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/y3_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/MMdd_Layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/HHmm_Layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yyyy_Layout">
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/M0_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/M1_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/d0_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/d1_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/HHmm_Layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/ss_Layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MMdd_Layout">
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/H0_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/H1_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/m0_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/m1_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ss_Layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="22dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HHmm_Layout">
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/s0_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+
+        <com.example.ian.numbermorph.NumberMorphView
+            android:id="@+id/s1_MorphView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

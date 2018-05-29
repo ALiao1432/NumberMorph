@@ -6,8 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -45,8 +45,9 @@ public class NumberMorphView extends View {
     private void initPaint() {
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.parseColor("#e8eaf6"));
-        paint.setStrokeWidth(W_SIZE / 14);
+        paint.setColor(Color.parseColor("#eeeeee"));
+        paint.setStrokeWidth(W_SIZE / 10);
+        paint.setStrokeCap(Paint.Cap.ROUND);
     }
 
     private void initAnimator() {
@@ -96,7 +97,6 @@ public class NumberMorphView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawColor(Color.RED);
         canvas.drawPath(path, paint);
     }
 }
