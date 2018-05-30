@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-public class NumberMorphView extends View {
+public class MorphView extends View {
 
     private static final String TAG = "XmlLabelParser";
 
@@ -31,7 +31,7 @@ public class NumberMorphView extends View {
     }
 
     @SuppressWarnings("ClickableViewAccessibility")
-    NumberMorphView(Context context, @Nullable AttributeSet attributeSet) {
+    MorphView(Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
 
         svgData = new SvgData(context);

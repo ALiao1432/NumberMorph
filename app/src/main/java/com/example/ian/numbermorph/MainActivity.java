@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private final NumberMorphView[] numberMorphViews = new NumberMorphView[14];
+    private final MorphView[] morphViews = new MorphView[14];
     private Handler handler;
     private Date date;
     private SimpleDateFormat dateFormat;
@@ -88,28 +88,28 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.setBackgroundColor(Color.parseColor(APP_BG_COLOR));
 
         for (int i = 0; i < ids.length; i++) {
-            numberMorphViews[i] = findViewById(ids[i]);
+            morphViews[i] = findViewById(ids[i]);
 
             if (i <= 7) {
-                numberMorphViews[i].setSize(125, 125);
-                numberMorphViews[i].setPaintColor("#ef5350");
-                numberMorphViews[i].setPaintWidth(10);
+                morphViews[i].setSize(125, 125);
+                morphViews[i].setPaintColor("#ef5350");
+                morphViews[i].setPaintWidth(10);
 
             } else if (i <= 11) {
-                numberMorphViews[i].setSize(200, 200);
-                numberMorphViews[i].setPaintColor("#ffa726");
-                numberMorphViews[i].setPaintWidth(20);
+                morphViews[i].setSize(200, 200);
+                morphViews[i].setPaintColor("#ffa726");
+                morphViews[i].setPaintWidth(20);
             } else {
-                numberMorphViews[i].setSize(450, 450);
-                numberMorphViews[i].setPaintColor("#ffee58");
-                numberMorphViews[i].setPaintWidth(30);
+                morphViews[i].setSize(450, 450);
+                morphViews[i].setPaintColor("#ffee58");
+                morphViews[i].setPaintWidth(30);
             }
         }
     }
 
     private void initViewPath() {
         for (int i = 0; i < ids.length; i++) {
-            numberMorphViews[i].setCurrentId(VdConstants.VD_NUM_MAP.get(0));
+            morphViews[i].setCurrentId(VdConstants.VD_NUM_MAP.get(0));
         }
     }
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             for (int i = 0; i < dateString.length(); i++) {
                                 int value = Integer.valueOf(dateString.substring(i, i + 1));
-                                numberMorphViews[i].performAnimation(VdConstants.VD_NUM_MAP.get(value));
+                                morphViews[i].performAnimation(VdConstants.VD_NUM_MAP.get(value));
                             }
                         }
 
