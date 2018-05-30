@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewPath() {
         for (int i = 0; i < ids.length; i++) {
-            numberMorphViews[i].setCurrentId(VdConstants.vdNumMap.get(0));
+            numberMorphViews[i].setCurrentId(VdConstants.VD_NUM_MAP.get(0));
         }
     }
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             for (int i = 0; i < dateString.length(); i++) {
                                 int value = Integer.valueOf(dateString.substring(i, i + 1));
-                                numberMorphViews[i].performAnimation(VdConstants.vdNumMap.get(value));
+                                numberMorphViews[i].performAnimation(VdConstants.VD_NUM_MAP.get(value));
                             }
                         }
 
