@@ -45,7 +45,6 @@ public class NumberMorphView extends View {
     private void initPaint() {
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.parseColor("#eeeeee"));
         paint.setStrokeWidth(W_SIZE / 10);
         paint.setStrokeCap(Paint.Cap.ROUND);
     }
@@ -91,6 +90,14 @@ public class NumberMorphView extends View {
     public void setCurrentId(int id) {
         initPath(id);
         invalidate();
+    }
+
+    public void setPaintColor(String color) {
+        paint.setColor(Color.parseColor(color));
+    }
+
+    public void setPaintWidth(int w) {
+        paint.setStrokeWidth(w);
     }
 
     @Override

@@ -65,10 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
         initClock();
-
-        constraintLayout.setBackgroundColor(Color.parseColor("#212121"));
-
-        startedGetTime();
     }
 
     @Override
@@ -86,16 +82,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        final String APP_BG_COLOR = "#000000";
+
         constraintLayout = findViewById(R.id.constraintLayout);
+        constraintLayout.setBackgroundColor(Color.parseColor(APP_BG_COLOR));
+
         for (int i = 0; i < ids.length; i++) {
             numberMorphViews[i] = findViewById(ids[i]);
 
             if (i <= 7) {
                 numberMorphViews[i].setSize(125, 125);
+                numberMorphViews[i].setPaintColor("#ef5350");
+                numberMorphViews[i].setPaintWidth(10);
+
             } else if (i <= 11) {
                 numberMorphViews[i].setSize(200, 200);
+                numberMorphViews[i].setPaintColor("#ffa726");
+                numberMorphViews[i].setPaintWidth(20);
             } else {
                 numberMorphViews[i].setSize(450, 450);
+                numberMorphViews[i].setPaintColor("#ffee58");
+                numberMorphViews[i].setPaintWidth(30);
             }
         }
     }
