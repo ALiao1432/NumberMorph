@@ -72,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        startedGetTime();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
 
@@ -110,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         date.setTime(System.currentTimeMillis());
                         dateString = dateFormat.format(date);
 
-                        if  (!isInitViewPath) {
+                        if (!isInitViewPath) {
                             initViewPath();
                             isInitViewPath = true;
                         } else {
