@@ -28,8 +28,6 @@ public class NumberMorphView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         setMeasuredDimension(W_SIZE, H_SIZE);
-
-        initPath(R.drawable.vd_0);
     }
 
     @SuppressWarnings("ClickableViewAccessibility")

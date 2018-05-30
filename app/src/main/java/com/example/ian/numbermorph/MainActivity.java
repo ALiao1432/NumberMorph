@@ -16,15 +16,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private ConstraintLayout constraintLayout;
-    private NumberMorphView[] numberMorphViews = new NumberMorphView[14];
+    private final NumberMorphView[] numberMorphViews = new NumberMorphView[14];
     private Handler handler;
     private Date date;
     private SimpleDateFormat dateFormat;
     private String dateString;
     private boolean isStarted = false;
     private boolean isInitViewPath = false;
-    private int[] ids = {
+    private final int[] ids = {
             R.id.y0_MorphView,
             R.id.y1_MorphView,
             R.id.y2_MorphView,
@@ -83,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         final String APP_BG_COLOR = "#000000";
+        ConstraintLayout constraintLayout;
 
         constraintLayout = findViewById(R.id.constraintLayout);
         constraintLayout.setBackgroundColor(Color.parseColor(APP_BG_COLOR));
