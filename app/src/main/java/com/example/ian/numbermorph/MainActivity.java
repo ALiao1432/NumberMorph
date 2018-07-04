@@ -92,16 +92,15 @@ public class MainActivity extends AppCompatActivity {
 
             if (i <= 7) {
                 morphViews[i].setSize(125, 125);
-                morphViews[i].setPaintColor("#ef5350");
+                morphViews[i].setPaintColor("#004d40");
                 morphViews[i].setPaintWidth(10);
-
             } else if (i <= 11) {
                 morphViews[i].setSize(200, 200);
-                morphViews[i].setPaintColor("#ffa726");
+                morphViews[i].setPaintColor("#00897b");
                 morphViews[i].setPaintWidth(20);
             } else {
                 morphViews[i].setSize(450, 450);
-                morphViews[i].setPaintColor("#ffee58");
+                morphViews[i].setPaintColor("#4db6ac");
                 morphViews[i].setPaintWidth(30);
             }
         }
