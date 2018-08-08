@@ -2,7 +2,6 @@ package com.example.ian.numbermorph;
 
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ class DataPath extends Path {
     private static final String TAG = "DataPath";
 
     private final String[] CMD_STRINGS = {
-            "M",
+            "M", "m",
             "C", "c",
             "L", "l",
             "H", "h",
@@ -40,6 +39,9 @@ class DataPath extends Path {
                 switch (aCmd.charAt(0)) {
                     case 'M':
                         addMoveToCmd(aCmd);
+                        break;
+                    case 'm':
+                        addRMoveToCmd(aCmd);
                         break;
                     case 'C':
                         addCubicToCmd(aCmd);
@@ -85,6 +87,9 @@ class DataPath extends Path {
             switch (fromCmdList.get(i).charAt(0)) {
                 case 'M':
                     addMoveToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+                case 'm':
+                    addRMoveToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
                     break;
                 case 'C':
                     addCubicToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
@@ -170,6 +175,42 @@ class DataPath extends Path {
                 this.moveTo(tempX, tempY);
             } else {
                 this.lineTo(tempX, tempY);
+            }
+
+            if (i == (size - 1)) {
+                lastPointF.set(tempX, tempY);
+            }
+        }
+    }
+
+    private void addRMoveToCmd(String rMoveCmd) {
+        PointF[] movePointFS = getPointFromCmd(rMoveCmd);
+        int size = movePointFS.length;
+
+        for (int i = 0; i < size; i++) {
+            if (i == 0) {
+                this.rMoveTo(movePointFS[i].x, movePointFS[i].y);
+            } else {
+                this.rLineTo(movePointFS[i].x, movePointFS[i].y);
+            }
+        }
+
+        lastPointF = movePointFS[size - 1];
+    }
+
+    private void addRMoveToCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getPointFromCmd(fromCmd);
+        PointF[] toPointFS = getPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        for (int i = 0; i < size; i++) {
+            float tempX = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            float tempY = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+
+            if (i == 0) {
+                this.rMoveTo(tempX, tempY);
+            } else {
+                this.rLineTo(tempX, tempY);
             }
 
             if (i == (size - 1)) {
