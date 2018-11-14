@@ -13,7 +13,7 @@ import android.view.animation.LinearInterpolator;
 
 public class MorphView extends View {
 
-    private static final String TAG = "XmlLabelParser";
+    private static final String TAG = "MorphView";
 
     private int W_SIZE = 150;
     private int H_SIZE = 150;
