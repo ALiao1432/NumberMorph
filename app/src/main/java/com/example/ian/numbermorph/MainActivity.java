@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import study.ian.morphviewlib.MorphView;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -22,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     private String dateString;
     private boolean isStarted = false;
-    private boolean isInitViewPath = false;
     private final int[] ids = {
             R.id.y0_MorphView,
             R.id.y1_MorphView,
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < ids.length; i++) {
             morphViews[i] = findViewById(ids[i]);
+            morphViews[i].setCurrentId(VdConstants.VD_NUM_MAP.get(0));
 
             if (i <= 7) {
                 morphViews[i].setSize(125, 125);
@@ -106,12 +108,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initViewPath() {
-        for (int i = 0; i < ids.length; i++) {
-            morphViews[i].setCurrentId(VdConstants.VD_NUM_MAP.get(0));
-        }
-    }
-
     private void initClock() {
         dateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.TAIWAN);
         date = new Date();
@@ -123,14 +119,9 @@ public class MainActivity extends AppCompatActivity {
                         date.setTime(System.currentTimeMillis());
                         dateString = dateFormat.format(date);
 
-                        if (!isInitViewPath) {
-                            initViewPath();
-                            isInitViewPath = true;
-                        } else {
-                            for (int i = 0; i < dateString.length(); i++) {
-                                int value = Integer.valueOf(dateString.substring(i, i + 1));
-                                morphViews[i].performAnimation(VdConstants.VD_NUM_MAP.get(value));
-                            }
+                        for (int i = 0; i < dateString.length(); i++) {
+                            int value = Integer.valueOf(dateString.substring(i, i + 1));
+                            morphViews[i].performAnimation(VdConstants.VD_NUM_MAP.get(value));
                         }
 
                         break;

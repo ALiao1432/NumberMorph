@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/y0_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -28,7 +28,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/y1_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -37,7 +37,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/y2_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -46,7 +46,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/y3_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -70,7 +70,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yyyy_Layout">
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/M0_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -79,7 +79,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/M1_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -88,7 +88,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/d0_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -97,7 +97,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/d1_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -121,7 +121,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MMdd_Layout">
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/H0_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -130,7 +130,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/H1_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -139,7 +139,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/m0_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -148,7 +148,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/m1_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -171,7 +171,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HHmm_Layout">
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/s0_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -180,7 +180,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1" />
 
-        <com.example.ian.numbermorph.MorphView
+        <study.ian.morphviewlib.MorphView
             android:id="@+id/s1_MorphView"
             android:layout_width="0dp"
             android:layout_height="45dp"
