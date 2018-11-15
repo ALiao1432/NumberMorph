@@ -1,17 +1,22 @@
 package com.example.ian.numbermorph;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import study.ian.colorpickerlib.ColorPickerView;
 import study.ian.morphviewlib.MorphView;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private final MorphView[] morphViews = new MorphView[14];
+    private View dialogView;
+    private ConstraintLayout constraintLayout;
     private Handler handler;
     private Date date;
     private SimpleDateFormat dateFormat;
@@ -39,6 +46,55 @@ public class MainActivity extends AppCompatActivity {
             R.id.m1_MorphView,
             R.id.s0_MorphView,
             R.id.s1_MorphView
+    };
+    private View.OnLongClickListener longClickListener = v -> {
+        int id = v.getId();
+
+        new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setPositiveButton(R.string.select_btn, (dialog, which) -> {
+                    ColorPickerView colorPickerView = dialogView.findViewById(R.id.colorPickerView);
+                    int color = colorPickerView.getSelectColor();
+                    if (id == R.id.constraintLayout) {
+                        constraintLayout.setBackgroundColor(color);
+                    } else {
+                        switch (id) {
+                            case R.id.y0_MorphView:
+                            case R.id.y1_MorphView:
+                            case R.id.y2_MorphView:
+                            case R.id.y3_MorphView:
+                            case R.id.M0_MorphView:
+                            case R.id.M1_MorphView:
+                            case R.id.d0_MorphView:
+                            case R.id.d1_MorphView:
+                                for (int j = 0; j <= 7; j++) {
+                                    morphViews[j].setPaintColor(color);
+                                }
+                                break;
+                            case R.id.H0_MorphView:
+                            case R.id.H1_MorphView:
+                            case R.id.m0_MorphView:
+                            case R.id.m1_MorphView:
+                                for (int j = 8; j <= 11; j++) {
+                                    morphViews[j].setPaintColor(color);
+                                }
+                                break;
+                            case R.id.s0_MorphView:
+                            case R.id.s1_MorphView:
+                                for (int j = 12; j < morphViews.length; j++) {
+                                    morphViews[j].setPaintColor(color);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    ((ViewGroup) dialogView.getParent()).removeView(dialogView);
+                })
+                .setOnCancelListener(dialog -> ((ViewGroup) dialogView.getParent()).removeView(dialogView))
+                .show();
+        return false;
     };
 
     @Override
@@ -65,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
         initClock();
+
+        dialogView = LayoutInflater.from(this).inflate(R.layout.color_picker_dialog, null);
     }
 
     @Override
@@ -83,14 +141,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         final String APP_BG_COLOR = "#000000";
-        ConstraintLayout constraintLayout;
 
         constraintLayout = findViewById(R.id.constraintLayout);
+        constraintLayout.setOnLongClickListener(longClickListener);
         constraintLayout.setBackgroundColor(Color.parseColor(APP_BG_COLOR));
 
         for (int i = 0; i < ids.length; i++) {
             morphViews[i] = findViewById(ids[i]);
             morphViews[i].setCurrentId(VdConstants.VD_NUM_MAP.get(0));
+            morphViews[i].setOnLongClickListener(longClickListener);
 
             if (i <= 7) {
                 morphViews[i].setSize(125, 125);
@@ -108,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("HandlerLeak")
     private void initClock() {
         dateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.TAIWAN);
         date = new Date();
